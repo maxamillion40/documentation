@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<?php
+	require_once("../includes/loader.php");
+	if($_USER -> class == "user" or $_USER -> class == "banned")	{
+		header("HTTP/1.1 403");
+		header("Location: ../error403.php?error=noaccess");
+		exit;
+	}
+	//
+	$users = $_MYSQL -> get("SELECT * FROM `users` ORDER BY `name` ASC");
+?>
+<html>
+	<head>
+		<title>User Verwaltung &raquo; ScratchCollabs in DACH</title>
+		<!-- Meta -->
+		<meta charset="utf-8" />
+		<meta name="description" content="Das CollabPortal ermöglicht es dir, auf einfache Weise Scratch Collabs zu erstellen, zu verwalten und zu veranstalten." />
+		<meta name="keywords" content="scratch,collabs,dach,deutsch" />
+		<meta name="robots" content="noindex,nofollow" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<!-- Stylesheets -->
+		<link rel="stylesheet" href="../styles/main.css" />
+		<link rel="stylesheet" href="../styles/cp.css" />
+		<link rel="stylesheet" href="../styles/maintenance.css" />
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="../favicon.ico" />
+		<!-- Scripts -->
+		<script src="../scripts/jquery/jquery-1.10.2.min.js"></script>
+		<script src="../scripts/jquery.tablesorter.min.js"></script>
+		<script src="../scripts/init.js"></script>
+		<script src="../scripts/maintenance.js"></script>
+	</head>
+	<body>
+		<div id="pagewrapper">
+			<!-- This is the blue box on the top of the site -->
+				<?php
+					include_once("includes/topnav.php");
+				?>
+			<!-- Main Content -->	
+			<div class="container" id="content">
+				<div class="cols clearfix" style="top: -10px; padding-left: 10px; padding-right: 10px;">
+						<article class="box">
+							<div class="box-head">
+								<h3><a href="index.php">Übersicht</a> &rarr; Benutzer</h3>
+							</div>
+							<div class="box-content">
+								<div class="inner">
+									<input type="text" id="search" placeholder="Suchen..." style="display: inline;" /><button class="button blue" onClick="javascript: search($('#search').val());">Los</button><button class="button grey" onClick="javascript: reset();">Reset</button>
+									<table id="userlist">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th class="headerSortDown">Name</th>
+												<th>Signup</th>
+												<th>E-Mail</th>
+												<th>Scratch Account</th>
+												<th>Letzte IP</th>
+												<th>Letzter Login</th>
+												<th>Rang</th>
+												<th>Rang ändern</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+												foreach($users as $u)	{
+													echo "<tr>";
+													echo "<td>".$u["id"]."</td>";
+													echo "<td>".$u["name"]."</td>";
+													echo "<td title='" . date("d.m.Y H:i", $u["last_login"]) . "'>".date("d.m.Y", $u["signup"])."</td>";
+													echo "<td>".$u["mail"]."</td>";
+													echo "<td><a href='http://scratch.mit.edu/users/".$u["name"]."' target='_blank'>".$u["name"]."</a></td>";
+													echo "<td>".$u["last_ip"]."</td>";
+													echo "<td>".date("d.m.Y H:i",$u["last_login"])."</td>";
+													echo "<td>".$u["class"]."</td>";
+													switch($u["class"])	{
+														case -2:
+															echo "<td>---</td>";
+															break;
+														case -1:
+															echo "<td><select><option onClick='navigate(\"../action.php?classchange&id=".$u["id"]."&class=1\")'>User</option><option onClick='navigate(\"../action.php?classchange&id=".$u["id"]."&class=2\")'>Moderator</option><option selected onClick='navigate(\"../action.php?classchange&id=".$u["id"]."&class=-1\")'>Banned</option></select></td>";
+															break;
+														case 1:
+															echo "<td><select><option selected onClick='navigate(\"../action.php?classchange&id=".$u["id"]."&class=1\")'>User</option><option onClick='navigate(\"../action.php?classchange&id=".$u["id"]."&class=2\")'>Moderator</option><option onClick='navigate(\"../action.php?classchange&id=".$u["id"]."&class=-1\")'>Banned</option></select></td>";
+															break;
+														case 2:
+															echo "<td><select><option onClick='navigate(\"../action.php?classchange&id=".$u["id"]."&class=1\")'>User</option><option selected onClick='navigate(\"../action.php?classchange&id=".$u["id"]."&class=2\")'>Moderator</option><option onClick='navigate(\"../action.php?classchange&id=".$u["id"]."&class=-1\")'>Banned</option></select></td>";
+															break;
+														case 3:
+															echo "<td>---</td>";
+															break;
+													}
+													echo "</tr>";
+												}
+											?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</article>
+					</div>
+				</div>
+		</div>
+		<!-- Footer -->
+		<?php
+			include_once("includes/footer.php");
+		?>
+		</div>
+	</body>
+</html>
