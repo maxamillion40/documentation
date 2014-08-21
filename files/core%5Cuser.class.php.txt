@@ -9,75 +9,75 @@
 			* User ID as known in the database
 			* @var int
 		*/
-		var $id;
+		public $id;
 		
 		/**
 			* Username
 			* @var string
 		*/
-		var $name;
+		public $name;
 		
 		/**
 			* Password, hashed by md5
 			* @var string
 		*/
-		var $pass;
+		public $pass;
 		
 		/**
 			* E-mail-address
 			* @var string
 		*/
-		var $mail;
+		public $mail;
 		
 		/**
 			* Scratch username
 			* @var string
 		*/
-		var $scratch;
+		public $scratch;
 		
 		/**
 			* User rank
 			* @var string
 			* @see CP::USER_GUEST CP::USER_*
 		*/
-		var $class;
+		public $class;
 		
 		/**
 			* Time of last login
 			* @var time
 		*/
-		var $last_login;
+		public $last_login;
 		
 		/**
 			* Last IP-address
 			* @var string
 		*/
-		var $last_ip;
+		public $last_ip;
 		
 		/**
 			* Is online
 			* @var boolean
 			* @deprecated
 		*/
-		var $online;
+		public $online;
 		
 		/**
 			* Preferred language
 			* @var string
 		*/
-		var $language;
+		public $language;
 		
 		/**
 			* Time of signup
 			* @var time
 		*/
-		var $signupDate;
+		public $signupDate;
 		
 		/**
 			* Time of last collab being started
 			* @var time
 		*/
-		var $lastCollab;
+		public $lastCollab;
 		
 		/**
 			* Constructor.
