@@ -1,10 +1,45 @@
 <?php
+	/**
+		* Current-page object.
+		* This object is ised to set-up the <head> and to define access rights.
+		* @since 2014-08-20
+		* @package core
+	*/
 	class page	{
+		/**
+			* The name shown in <title> before CP::TITLE_SPLITTER
+			* @var string
+		*/
 		var $title;
+		
+		/**
+			* The description shown in <head>
+			* @var string
+		*/
 		var $description;
+		
+		/**
+			* Array of keywords shown in <head>
+			* @var array
+		*/
 		var $keywords;
+		
+		/**
+			* Robot commands
+			* @var string
+		*/
 		var $robots;
+		
+		/**
+			* Array of scripts used in this page
+			* @var array
+		*/
 		var $scripts;
+		
+		/**
+			* Array of styles used by this page
+			* @var array
+		*/
 		var $styles;
 		
 		public function __construct()	{
@@ -49,7 +84,7 @@
 			$this -> description = $desc;
 		}
 		public function addKeywords($keys)	{
-			if(!is_array($prefix))	{
+			if(!is_array($keys))	{
 				trigger_error("Bad argument #1 to page::add_Keywords(), array expected, got " . gettype($name), E_USER_ERROR);
 			}
 			//

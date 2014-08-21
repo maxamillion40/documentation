@@ -106,7 +106,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">136</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">104</span>
                                 </a>
                             </li>
                             <li>
@@ -116,7 +116,7 @@
                             </li>
                             <li>
                                 <a href="../reports/deprecated.html">
-                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">2</span>
+                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">3</span>
                                 </a>
                             </li>
                         </ul>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1738141189"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-872222843"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1738141189" class="accordion-body collapse in">
+            <div id="namespace-872222843" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -189,7 +189,7 @@
                         <section class="row-fluid public">
                             <section class="span4">
                                                                     <a href="../classes/message.html#method___construct" class="">__construct()</a><br />
-                                                                    <a href="../classes/message.html#method_can_send" class="">can_send()</a><br />
+                                                                    <a href="../classes/message.html#method_can_send" class="deprecated">can_send()</a><br />
                                                                     <a href="../classes/message.html#method_send" class="">send()</a><br />
                                                             </section>
                             <section class="span4">
@@ -274,12 +274,12 @@
             <a id="property_id" name="property_id" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$id</h3>
-                <pre class="signature">$id : </pre>
-                <p><em></em></p>
+                <pre class="signature">$id : integer</pre>
+                <p><em>Message ID as known in the database</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                integer
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -298,12 +298,12 @@
             <a id="property_to" name="property_to" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$to</h3>
-                <pre class="signature">$to : </pre>
-                <p><em></em></p>
+                <pre class="signature">$to : string</pre>
+                <p><em>Name of the user the message has been sent/ will be sent to</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                string
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -322,12 +322,12 @@
             <a id="property_date" name="property_date" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$date</h3>
-                <pre class="signature">$date : </pre>
-                <p><em></em></p>
+                <pre class="signature">$date : \time</pre>
+                <p><em>Date of message creation</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                <a href="../classes/time.html">\time</a>
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -346,12 +346,12 @@
             <a id="property_regard" name="property_regard" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$regard</h3>
-                <pre class="signature">$regard : </pre>
-                <p><em></em></p>
+                <pre class="signature">$regard : string</pre>
+                <p><em>Message subject</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                string
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -370,12 +370,12 @@
             <a id="property_msg" name="property_msg" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$msg</h3>
-                <pre class="signature">$msg : </pre>
-                <p><em></em></p>
+                <pre class="signature">$msg : string</pre>
+                <p><em>Message content</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                string
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -394,12 +394,12 @@
             <a id="property_read" name="property_read" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$read</h3>
-                <pre class="signature">$read : </pre>
-                <p><em></em></p>
+                <pre class="signature">$read : boolean</pre>
+                <p><em>Indicates whether the message has already been read</em></p>
                 
 
                                 <h4>Type</h4>
-                
+                boolean
                                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -426,16 +426,16 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct( <span class="argument">$id</span>)</pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(integer <span class="argument">$id</span>) : void</pre>
+                <p><em>Constructor.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$id </td>
-                                <td></td>
+                                <td><p>Pass an existing message ID to it</p></td>
                             </tr>
                                             </table>
                 
@@ -457,10 +457,10 @@
         <div class="span8 content class">
             <a id="method_can_send" name="method_can_send" class="anchor"></a>
             <article class="method">
-                <h3 class="public ">can_send()</h3>
+                <h3 class="public deprecated">can_send()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">can_send()</pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">can_send() : void</pre>
+                <p><em>Checks whether all required data for this message has been set.</em></p>
                 
 
                 
@@ -469,7 +469,11 @@
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
+                                                                <aside class="alert alert-block alert-error">
+                    <h4>Deprecated</h4>
+                    
+                </aside>
+                        <dl>
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
@@ -484,8 +488,8 @@
             <article class="method">
                 <h3 class="public ">send()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">send()</pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">send() : void</pre>
+                <p><em>Save message to database</em></p>
                 
 
                 
@@ -552,7 +556,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on August 21st, 2014 at 16:43.
+                    on August 21st, 2014 at 17:11.
                 </section>
             </section>
         </section>
