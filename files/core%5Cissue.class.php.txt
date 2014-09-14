@@ -1,0 +1,101 @@
+<?php
+	/**
+		* Class for project issues.
+		* @since 2014-09-13
+		* @package core
+	*/
+	class issue	{
+		/**
+			* ID as known in the database
+			* @var int
+		*/
+		public $id;
+		
+		/**
+			* Project ID as known in the database. Handles assignment issue -> project
+			* @var int
+		*/
+		public $projectID;
+		
+		/**
+			* Time of creation
+			* @var time
+		*/
+		public $timestamp;
+		
+		/**
+			* Issue opener
+			* @var user
+		*/
+		public $opener;
+		
+		/**
+			* Issue title
+			* @var string
+		*/
+		public $title;
+		
+		/**
+			* Issue content
+			* @var string
+		*/
+		public $description;
+		
+		/**
+			* Who is assigned to this issue?
+			* @var user
+		*/
+		public $assignee;
+		
+		/**
+			* Is this discussion finished?
+			* @var boolean
+		*/
+		public $closed;
+		
+		/**
+			* Are comments locked?
+			* @var boolean
+		*/
+		public $locked;
+		
+		/**
+			* Is this a valid and existing issue?
+			* @var boolean
+		*/
+		private $valid;
+		
+		/**
+			* Constructor.
+			* @param int $id
+		*/
+		public function __construct($id)	{
+			global $_MYSQL;
+			$raw = $_MYSQL -> get("SELECT * FROM `issues` WHERE `id`=?", array($id));
+			if(count($raw) == 1)	{
+				$this -> id 			= (int)	$raw[0]["id"];
+				$this -> projectID		= (int)	$raw[0]["project"];
+				$this -> timestamp		= (object) new time((int) $raw[0]["time"]);
+				$this -> opener			= (object) new user((string) $raw[0]["opener"]);
+				$this -> title			= (string) $raw[0]["title"];
+				$this -> description	= (string) $raw[0]["body"];
+				$this -> assignee		= (object) new user((string) $raw[0]["assignee"]);
+				$this -> closed			= (boolean) $raw[0]["closed"];
+				$this -> locked			= (boolean) $raw[0]["locked"];
+				$this -> valid			= true;
+			}
+			else	{
+				$this -> valid = false;
+			}
+		}
+		
+		/**
+			* Is this issue valid? Invalid issues might cause unexpected behaviour.
+			* @return boolean
+			* @api
+		*/
+		public function is_valid()	{
+			return $this -> valid == true;
+		}
+	}
+?>

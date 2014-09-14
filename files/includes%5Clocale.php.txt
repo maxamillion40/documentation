@@ -11,6 +11,9 @@
 	
 	foreach($files as $l)	{
 		//Load .po file
+		if($l == ".htaccess")	{
+			continue;
+		}
 		$po = file($_HOME . "/locale/" . $l, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 		//Create new language tree in $_LOCALE
 		$key = str_replace("#", "", preg_replace("#ScratchHub translation file for language (.*) \((.*)\)#Uis", "$1", $po[0]));

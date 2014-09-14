@@ -9,76 +9,127 @@
 			* Collab ID as known in the database
 			* @var int
 		*/
-		var $id;
+		public $id;
 		
 		/**
 			* ID of last collabmessage as known in the database
 			* @var int
 			* @see collabmessage::internalID
 		*/
-		var $lastInternalID;
+		public $lastInternalID;
 		
 		/**
 			* Collab name
 			* @var string
 		*/
-		var $name;
+		public $name;
 		
 		/**
 			* Collab start time
 			* @var time
 		*/
-		var $starttime;
+		public $starttime;
 		
 		/**
 			* Collab participants.
 			* two-dimensional array of user objects. Regular members can be found at ["members"] while candidates are stored in ["candidates"]
 			* @var array
 		*/
-		var $members;
+		public $members;
 		
 		/**
 			* Collab opening state.
 			* Can be either open or closed
 			* @var string
 		*/
-		var $status;
+		public $status;
 		
 		/**
 			* Collab owner
 			* @var user
 		*/
-		var $owner;
+		public $owner;
 		
 		/**
 			* Description
 			* @var string
 		*/
-		var $desc;
+		public $desc;
 		
 		/**
 			* Binary data of the collab logo
 			* @var string
 		*/
-		var $logo;
+		public $logo;
 		
 		/**
 			* Settings
 			* @var array
 		*/
-		var $settings;
+		public $settings;
 		
 		/**
 			* Announcement
 			* @var string
 		*/
-		var $announcement;
+		public $announcement;
 		
 		/**
 			* Project ID for the project preview
 			* @var int
 		*/
-		var $pid;
+		public $pid;
+		
+		/**
+			* Stores IDs of projects assigned to this collab
+			* @var array
+		*/
+		private $projectIDs;
+		
+		/**
+			* Member rank "guest"
+			* @const
+		*/
+		const RANK_GUEST = 0;
+		
+		/**
+			* Member rank "candidate"
+			* @const
+		*/
+		const RANK_CANDIDATE = 1;
+		
+		/**
+			* Member rank "member"
+			* @const
+		*/
+		const RANK_MEMBER = 2;
+		
+		/**
+			* Member rank "owner"
+			* @const
+		*/
+		const RANK_OWNER = 3;
+		
+		/**
+			* Convert a collab member rank to a string
+			* @param int $rank collab::RANK_*
+		*/
+		public static function rank_to_string($rank)	{
+			switch($rank)	{
+				case 0:
+					return "Guest";
+					break;
+				case 1:
+					return "Candidate";
+					break;
+				case 2:
+					return "Member";
+					break;
+				case 3:
+					return "Owner";
+					break;
+			}
+		}
 		
 		/**
 			* Constructor.
@@ -106,6 +157,11 @@
 				"new_members" => $data[0]["setting_new-members"],
 				"language" => $data[0]["setting_language"]
 			);
+			$this -> projectIDs = array();
+			$rawIDs	= $_MYSQL -> get("SELECT `id` FROM `projects` WHERE `collab`=?", array($this -> id));
+			foreach($rawIDs as $id)	{
+				array_push($this -> projectIDs, $id[0]);
+			}
 			// Create user objects for members
 			$max = count($this -> members["people"]);
 			for($i=0; $i < $max; $i++)	{
@@ -121,10 +177,12 @@
 				unset($this->members["candidates"][$i]);
 			}
 		}
+		
 		/**
 			* Get the rank of a user in the collab.
 			* @param string $name Username
-			* @return string
+			* @return int
+			* @see collab::RANK_* Collab member ranks
 			* @api
 		*/
 		public function member_rank($name)	{
@@ -134,22 +192,23 @@
 			// Return the rank of a user in this collab
 			$name = new user($name);
 			if(array_key_exists($name -> name, $this -> members["people"]))	{
-				return "member";
+				return collab::RANK_MEMBER;
 			}
 			elseif(array_key_exists($name -> name, $this -> members["candidates"]))	{
-				return "candidate";
+				return collab::RANK_CANDIDATE;
 			}
 			elseif($this -> owner -> name == $name -> name)	{
-				return "founder";
+				return collab::RANK_OWNER;
 			}
 			else	{
-				return "guest";
+				return collab::RANK_GUEST;
 			}
 		}
+		
 		/**
 			* Add a user to the collab.
 			* @param string $name Username
-			* @param string $rank "member" or "candidate", defines to which list the user gets added
+			* @param integer $rank collab::RANK_*
 			* @return void
 			* @api
 		*/
@@ -157,13 +216,13 @@
 			if(!is_string($name))	{
 				trigger_error("Bad argument #1 to collab::add_member(), string expected, got " . gettype($name), E_USER_ERROR);
 			}
-			if(!is_string($name))	{
-				trigger_error("Bad argument #2 to collab::member_rank(), string expected, got " . gettype($name), E_USER_ERROR);
+			if(!is_int($rank))	{
+				trigger_error("Bad argument #2 to collab::add_member(), integer expected, got " . gettype($name), E_USER_ERROR);
 			}
 			//
 			global $_MYSQL;
 			$name = new user($name);
-			if($rank == "member")	{
+			if($rank == collab::RANK_MEMBER)	{
 				$this -> members["people"][] = $name;
 				if(isset($this -> members["candidates"][$name]))	{
 					unset($this -> members["candidates"][$name]);
@@ -188,7 +247,7 @@
 				));
 			}
 			
-			if($rank == "candidate")	{
+			if($rank == collab::RANK_CANDIDATE)	{
 				$this -> members["candidates"][] = $name;
 
 				$arr = array(
@@ -210,10 +269,11 @@
 				));
 			}
 		}
+		
 		/**
 			* Remove a user from the collab.
 			* @param string $name Username
-			* @param string $rank "member" or "candidate", defines from which list the user is removed
+			* @param integer $rank collab::RANK_*
 			* @return void
 			* @api
 		*/
@@ -221,15 +281,15 @@
 			if(!is_string($name))	{
 				trigger_error("Bad argument #1 to collab::remove_member(), string expected, got " . gettype($name), E_USER_ERROR);
 			}
-			if(!is_string($candidate))	{
-				trigger_error("Bad argument #2 to collab::remove_member(), string expected, got " . gettype($name), E_USER_ERROR);
+			if(!is_int($rank))	{
+				trigger_error("Bad argument #2 to collab::remove_member(), integer expected, got " . gettype($name), E_USER_ERROR);
 			}
 			//
 			global $_MYSQL;
-			if($rank == "member")	{
+			if($rank == collab::RANK_MEMBER)	{
 				unset($this -> members["people"][$name]);
 			}
-			if($rank == "candidate")	{
+			if($rank == collab::RANK_CANDIDATE)	{
 				unset($this -> members["candidates"][$name]);
 			}
 			
@@ -251,6 +311,7 @@
 				$this -> id
 			));
 		}
+		
 		/**
 			* Close the collab.
 			* @return void

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 	require_once("includes/loader.php");
-	if(!$_USER -> is_online())	{
+	if(!$_USER -> isLoggedIn())	{
 		header("Location: index.php");
 	}
 	$messages = array();
@@ -33,7 +33,7 @@
 			<div class="container" id="content">
 				<article class="box">
 					<div class="box-head">
-						<h3><?php echo __("System messages"); ?></h3><span class='box-header-button'><a href='compose.php'><button class="button blue">+ <?php echo __("New message"); ?></button></a></span>
+						<h3><?php echo __("System messages"); ?></h3>
 					</div>
 					<div class="box-content">
 						<div class="inner">
